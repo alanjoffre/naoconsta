@@ -1,0 +1,61 @@
+{
+  "veredito": "GO",
+  "reprovados": [],
+  "criterios": {
+    "1_volume_contratos": "≥ 300 contratos com texto extraído",
+    "2_volume_perguntas": "≥ 5.000 perguntas rotuladas",
+    "3_recusa_e_maioria": "≥ 50% das perguntas SEM resposta (o eixo da tese)",
+    "4_gold_verificavel": "≥ 99% dos spans batem com o texto no offset declarado",
+    "5_gold_humano": "rótulo é humano, não de máquina",
+    "6_licenca_permissiva": "licença permite uso em portfólio público",
+    "7_texto_substancial": "mediana ≥ 10.000 caracteres por contrato (RAG faz sentido)"
+  },
+  "medidas": {
+    "n_pdf": 510,
+    "n_txt": 511,
+    "n_xlsx_relatorios_de_label": 28,
+    "versao_declarada": "aok_v1.0",
+    "n_contratos": 510,
+    "n_contratos_distintos": 510,
+    "n_perguntas": 20910,
+    "n_impossiveis": 14208,
+    "n_respondiveis": 6702,
+    "taxa_is_impossible": 0.6795,
+    "n_spans": 13823,
+    "taxa_span_confere": 1.0,
+    "n_categorias": 41,
+    "categorias_top": [
+      [
+        "Document Name",
+        510
+      ],
+      [
+        "Parties",
+        510
+      ],
+      [
+        "Agreement Date",
+        510
+      ],
+      [
+        "Effective Date",
+        510
+      ],
+      [
+        "Expiration Date",
+        510
+      ]
+    ],
+    "perguntas_por_contrato": 41.0,
+    "spans_por_pergunta_respondivel": 2.06,
+    "chars_total": 26807133,
+    "chars_mediana": 33425,
+    "chars_min": 645,
+    "chars_max": 338211,
+    "tokens_estimados_corpus": 6701783,
+    "licenca_ok": true,
+    "licenca_trecho": "CUAD is licensed under the Creative Commons Attribution 4.0 (CC BY 4.0) license and free to the public for commercial and non-commercial use.",
+    "gold_humano": true,
+    "anotadores_trecho": "1. Law Student Training: law students attended training sessions on each of the categories that included a summary, video instructions by experienced attorneys, multiple quizzes an"
+  }
+}

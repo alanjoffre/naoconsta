@@ -1,0 +1,44 @@
+[project]
+name = "naoconsta"
+version = "0.1.0"
+description = "Agente de RAG contratual avaliado pelo que ele RECUSA responder (CUAD, 68% sem resposta)."
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic-settings>=2.0",
+    "numpy>=2.0",
+]
+
+[project.optional-dependencies]
+# Grafo do agente (LangGraph) — o eixo de "frameworks de agentes" das vagas.
+grafo = ["langgraph>=0.2", "langchain-core>=0.3"]
+# Recuperação: pgvector no Postgres.
+vetor = ["psycopg[binary]>=3.2", "pgvector>=0.3"]
+# SUT via API (opcional; o caminho default é Ollama local e o import é tardio).
+api = ["anthropic>=0.60"]
+# Servidor MCP.
+mcp = ["mcp>=1.2"]
+dev = ["ruff>=0.6", "pytest>=8.0"]
+# Tudo que a SUÍTE precisa para COLETAR. Lição da Fase 22 do RodoQuery: o CI instalava só [dev],
+# a suíte importava um extra e a COLETA do pytest quebrava — build vermelho por 32 execuções.
+# Extra nomeado em vez de lista mágica no YAML: teste novo que exija extra entra aqui.
+test = ["naoconsta[dev,grafo,vetor,api,mcp]"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# A raiz no sys.path, EXPLICITAMENTE: `pytest` (console script) não põe o cwd lá, `python -m
+# pytest` põe. Foi essa diferença de invocação que deixou o CI do RodoQuery vermelho por 12 dias.
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
