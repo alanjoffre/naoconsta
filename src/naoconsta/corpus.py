@@ -3,14 +3,26 @@
 Três decisões de método, todas medidas na Fase 1 (`reports/fase1/estrutura_consultas.json`) e
 não escolhidas por gosto:
 
-**Chunk de 1.200 caracteres.** O span mediano tem 196 caracteres e o p99 tem 1.330; um chunk de
-1.200 preserva **98,55%** dos spans inteiros, contra 78,62% em 400 e 95,69% em 800. Passar para
-2.000 levaria a 99,75% — +1,2 pp de cobertura ao custo de 67% mais texto por chunk, o que dilui a
-similaridade e enche o contexto do agente. 1.200 é o joelho da curva, e a curva está no artefato.
+**Chunk de 400 caracteres** — e a primeira versão usava 1.200, pelo motivo errado. O critério
+original era "preservar o span inteiro": 1.200 preserva 98,55% deles contra 78,62% em 400. Mas
+*preservar* e *recuperar* não são a mesma coisa. Medido com **orçamento de texto fixo** (o k que
+cabe em 12.000 caracteres, para que todas as configurações entreguem a mesma quantidade de
+evidência), a ordem se inverte monotonicamente:
 
-**Sobreposição de 200.** Sem ela, um span que cai exatamente na fronteira fica partido ao meio nos
-dois chunks e nenhum o contém. Com 200 (a mediana do span, arredondada), todo span de até 200
-caracteres aparece inteiro em pelo menos um chunk.
+    400/75    88,1%  (k=30)   <- adotado
+   1200/200   78,8%  (k=10)   <- a escolha anterior
+   3000/400   70,7%  (k=4)
+
+São **+9,3 pp sem gastar um caractere a mais**. Comparar `recall@k` entre tamanhos diferentes é
+comparar coisas diferentes — chunk grande "ganha" varrendo mais texto, não achando melhor. Ver
+`docs/FASE1B_ALAVANCAS.md`.
+
+Não se adotou 300/60 (89,5%, +1,4 pp) porque ele custa 35% mais vetores e entrega 40 fragmentos
+onde 400/75 entrega 30 — e o agente da Fase 2 vai LER esses fragmentos. Que 40 cacos sejam piores
+que 30 é **hipótese não medida**, e está declarada como tal.
+
+**Sobreposição de 75.** Sem ela, um span na fronteira fica partido e nenhum chunk o contém. Com
+75 (~⅕ do chunk), a regra de relevância de 50% do span continua alcançável nas bordas.
 
 **Busca com filtro por contrato.** O CUAD faz as MESMAS 41 perguntas a cada contrato — são 41
 textos de consulta distintos repetidos até 510 vezes. Buscar "qual a lei aplicável?" no corpus
@@ -25,8 +37,8 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-CHUNK = 1200
-SOBREPOSICAO = 200
+CHUNK = 400
+SOBREPOSICAO = 75
 PASSO = CHUNK - SOBREPOSICAO
 
 
