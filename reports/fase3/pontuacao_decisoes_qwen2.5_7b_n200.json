@@ -1,0 +1,110 @@
+{
+  "artefato": "decisoes_qwen2.5_7b_n200.json",
+  "modelo": "qwen2.5:7b",
+  "n": 200,
+  "teto_recuperacao": 0.87,
+  "json_malformado": 2,
+  "guarda_barrou": 8,
+  "respondeu_sem_guarda": 69,
+  "motivos_guarda": {
+    "citacao_ausente_do_contexto": 8
+  },
+  "sistemas": {
+    "sem_guarda": {
+      "respondiveis": {
+        "acertos": 33,
+        "n": 100,
+        "taxa": 0.33,
+        "ic95": [
+          0.2456,
+          0.4269
+        ]
+      },
+      "respondiveis_recuperaveis": {
+        "acertos": 32,
+        "n": 87,
+        "taxa": 0.3678,
+        "ic95": [
+          0.2741,
+          0.4727
+        ]
+      },
+      "abstencao": {
+        "acertos": 90,
+        "n": 100,
+        "taxa": 0.9,
+        "ic95": [
+          0.8256,
+          0.9448
+        ]
+      },
+      "total": {
+        "acertos": 123,
+        "n": 200,
+        "taxa": 0.615
+      }
+    },
+    "com_guarda": {
+      "respondiveis": {
+        "acertos": 33,
+        "n": 100,
+        "taxa": 0.33,
+        "ic95": [
+          0.2456,
+          0.4269
+        ]
+      },
+      "respondiveis_recuperaveis": {
+        "acertos": 32,
+        "n": 87,
+        "taxa": 0.3678,
+        "ic95": [
+          0.2741,
+          0.4727
+        ]
+      },
+      "abstencao": {
+        "acertos": 91,
+        "n": 100,
+        "taxa": 0.91,
+        "ic95": [
+          0.8377,
+          0.9519
+        ]
+      },
+      "total": {
+        "acertos": 124,
+        "n": 200,
+        "taxa": 0.62
+      }
+    }
+  },
+  "mcnemar_abstencao": {
+    "guarda_ganha": 1,
+    "sem_guarda_ganha": 0,
+    "p": 1.0
+  },
+  "delta_abstencao_pp": 1.0,
+  "preregistro": {
+    "1: guarda pega >=10% das respostas": {
+      "confirmada": true,
+      "medido": "11.6%"
+    },
+    "2: delta de abstencao >= 15 pp": {
+      "confirmada": false,
+      "medido": "+1.0 pp"
+    },
+    "3: sem_guarda abstem em < 40%": {
+      "confirmada": false,
+      "medido": "90.0%"
+    },
+    "4: acuracia respondiveis <= 55%": {
+      "confirmada": true,
+      "medido": "33.0%"
+    },
+    "5: >=5% de JSON malformado": {
+      "confirmada": false,
+      "medido": "1.0%"
+    }
+  }
+}

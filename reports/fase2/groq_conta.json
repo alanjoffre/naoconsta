@@ -1,0 +1,105 @@
+{
+  "n_modelos": 15,
+  "modelos": [
+    {
+      "id": "allam-2-7b",
+      "context_window": 4096,
+      "max_completion_tokens": 4096,
+      "owned_by": "SDAIA"
+    },
+    {
+      "id": "canopylabs/orpheus-arabic-saudi",
+      "context_window": 4000,
+      "max_completion_tokens": 50000,
+      "owned_by": "Canopy Labs"
+    },
+    {
+      "id": "canopylabs/orpheus-v1-english",
+      "context_window": 4000,
+      "max_completion_tokens": 50000,
+      "owned_by": "Canopy Labs"
+    },
+    {
+      "id": "groq/compound",
+      "context_window": 131072,
+      "max_completion_tokens": 8192,
+      "owned_by": "Groq"
+    },
+    {
+      "id": "groq/compound-mini",
+      "context_window": 131072,
+      "max_completion_tokens": 8192,
+      "owned_by": "Groq"
+    },
+    {
+      "id": "llama-3.1-8b-instant",
+      "context_window": 131072,
+      "max_completion_tokens": 131072,
+      "owned_by": "Meta"
+    },
+    {
+      "id": "llama-3.3-70b-versatile",
+      "context_window": 131072,
+      "max_completion_tokens": 32768,
+      "owned_by": "Meta"
+    },
+    {
+      "id": "meta-llama/llama-prompt-guard-2-22m",
+      "context_window": 512,
+      "max_completion_tokens": 512,
+      "owned_by": "Meta"
+    },
+    {
+      "id": "meta-llama/llama-prompt-guard-2-86m",
+      "context_window": 512,
+      "max_completion_tokens": 512,
+      "owned_by": "Meta"
+    },
+    {
+      "id": "openai/gpt-oss-120b",
+      "context_window": 131072,
+      "max_completion_tokens": 65536,
+      "owned_by": "OpenAI"
+    },
+    {
+      "id": "openai/gpt-oss-20b",
+      "context_window": 131072,
+      "max_completion_tokens": 65536,
+      "owned_by": "OpenAI"
+    },
+    {
+      "id": "openai/gpt-oss-safeguard-20b",
+      "context_window": 131072,
+      "max_completion_tokens": 65536,
+      "owned_by": "OpenAI"
+    },
+    {
+      "id": "qwen/qwen3.6-27b",
+      "context_window": 131072,
+      "max_completion_tokens": 16384,
+      "owned_by": "Alibaba Cloud"
+    },
+    {
+      "id": "whisper-large-v3",
+      "context_window": 448,
+      "max_completion_tokens": 448,
+      "owned_by": "OpenAI"
+    },
+    {
+      "id": "whisper-large-v3-turbo",
+      "context_window": 448,
+      "max_completion_tokens": 448,
+      "owned_by": "OpenAI"
+    }
+  ],
+  "modelo_testado": "llama-3.3-70b-versatile",
+  "status_teste": 200,
+  "limites": {
+    "x-ratelimit-limit-requests": "1000",
+    "x-ratelimit-limit-tokens": "12000",
+    "x-ratelimit-remaining-requests": "999",
+    "x-ratelimit-remaining-tokens": "11959",
+    "x-ratelimit-reset-requests": "1m26.4s",
+    "x-ratelimit-reset-tokens": "205ms"
+  }
+}

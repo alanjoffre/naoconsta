@@ -1,0 +1,47 @@
+{
+  "llama-3.3-70b-versatile": {
+    "status": 200,
+    "x-ratelimit-limit-requests": "1000",
+    "x-ratelimit-limit-tokens": "12000",
+    "x-ratelimit-remaining-requests": "991",
+    "x-ratelimit-remaining-tokens": "11963",
+    "x-ratelimit-reset-requests": "12m57.599s",
+    "x-ratelimit-reset-tokens": "185ms"
+  },
+  "openai/gpt-oss-120b": {
+    "status": 200,
+    "x-ratelimit-limit-requests": "1000",
+    "x-ratelimit-limit-tokens": "8000",
+    "x-ratelimit-remaining-requests": "999",
+    "x-ratelimit-remaining-tokens": "7927",
+    "x-ratelimit-reset-requests": "1m26.4s",
+    "x-ratelimit-reset-tokens": "547ms"
+  },
+  "openai/gpt-oss-20b": {
+    "status": 200,
+    "x-ratelimit-limit-requests": "1000",
+    "x-ratelimit-limit-tokens": "8000",
+    "x-ratelimit-remaining-requests": "999",
+    "x-ratelimit-remaining-tokens": "7927",
+    "x-ratelimit-reset-requests": "1m26.4s",
+    "x-ratelimit-reset-tokens": "547ms"
+  },
+  "qwen/qwen3.6-27b": {
+    "status": 200,
+    "x-ratelimit-limit-requests": "1000",
+    "x-ratelimit-limit-tokens": "8000",
+    "x-ratelimit-remaining-requests": "999",
+    "x-ratelimit-remaining-tokens": "7988",
+    "x-ratelimit-reset-requests": "1m26.4s",
+    "x-ratelimit-reset-tokens": "90ms"
+  },
+  "llama-3.1-8b-instant": {
+    "status": 200,
+    "x-ratelimit-limit-requests": "14400",
+    "x-ratelimit-limit-tokens": "6000",
+    "x-ratelimit-remaining-requests": "14399",
+    "x-ratelimit-remaining-tokens": "5963",
+    "x-ratelimit-reset-requests": "6s",
+    "x-ratelimit-reset-tokens": "370ms"
+  }
+}

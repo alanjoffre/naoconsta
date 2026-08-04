@@ -7,6 +7,7 @@ se exercita é a TOPOLOGIA e a POLÍTICA, não o modelo. Um teste que precisa de
 import pytest
 
 from naoconsta.agente import (
+    blocos_contiguos,
     construir_grafo,
     decidir_do_bruto,
     extrair_json,
@@ -83,6 +84,54 @@ def test_guarda_e_ASSIMETRICA_nunca_cria_resposta():
     e = verificar(_estado("nao_consta", "qualquer coisa inventada"))
     assert e["decisao"] == "nao_consta"
     assert not e.get("guarda_barrou")
+
+
+# ---------------------------------------------------------------- citação através de trechos
+# Dois trechos CONTÍGUOS de um contrato (o segundo começa onde o primeiro termina).
+CONTIGUOS = [
+    {"id": 0, "inicio": 0, "fim": 60,
+     "texto": "The initial term of this Agreement shall be for a period of "},
+    {"id": 1, "inicio": 60, "fim": 118,
+     "texto": "five (5) years from the date first set forth above hereto."},
+]
+
+
+def test_guarda_aceita_citacao_QUE_ATRAVESSA_trechos_adjacentes():
+    """O defeito medido no piloto: com chunks de 400, toda citação maior que 400 era barrada
+    POR CONSTRUÇÃO. Dos 13 barrados, 4 atravessavam trechos vizinhos e 3 acertavam o gold."""
+    e = {"trechos": CONTIGUOS, "decisao": "responde", "trecho": 0,
+         "citacao": "for a period of five (5) years from the date"}
+    assert verificar(e)["decisao"] == "responde"
+
+
+def test_guarda_ainda_barra_invencao_mesmo_com_fusao():
+    """A fusão não pode virar frouxidão: texto que não está em lugar nenhum segue reprovado."""
+    e = {"trechos": CONTIGUOS, "decisao": "responde", "trecho": 0,
+         "citacao": "for a period of ten (10) years from the date"}
+    assert verificar(e)["decisao"] == "nao_consta"
+
+
+def test_blocos_nao_duplicam_a_sobreposicao():
+    sobrepostos = [
+        {"id": 0, "inicio": 0, "fim": 20, "texto": "The quick brown fox "},
+        {"id": 1, "inicio": 15, "fim": 35, "texto": "fox jumps over lazy "},
+    ]
+    b = blocos_contiguos(sobrepostos)
+    assert len(b) == 1
+    assert b[0].count("fox") == 1, "a sobreposição foi remontada duas vezes"
+
+
+def test_trechos_separados_nao_sao_fundidos():
+    """Trechos distantes no contrato NÃO formam texto contínuo — fundi-los deixaria passar
+    citação costurada de partes que o agente viu, mas que não são vizinhas no documento."""
+    distantes = [
+        {"id": 0, "inicio": 0, "fim": 20, "texto": "governed by Delaware"},
+        {"id": 1, "inicio": 9000, "fim": 9020, "texto": " law and equity."},
+    ]
+    assert len(blocos_contiguos(distantes)) == 2
+    e = {"trechos": distantes, "decisao": "responde",
+         "citacao": "governed by Delaware law and equity."}
+    assert verificar(e)["decisao"] == "nao_consta"
 
 
 # ---------------------------------------------------------------- prompt e grafo

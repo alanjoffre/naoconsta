@@ -95,6 +95,40 @@ def montar_prompt(pergunta: str, trechos: list[dict]) -> str:
     return PROMPT.format(trechos=corpo, pergunta=pergunta)
 
 
+def blocos_contiguos(trechos: list[dict]) -> list[str]:
+    """Funde trechos ADJACENTES ou sobrepostos num só texto, para a verificação.
+
+    Existe por um defeito medido. A primeira versão da guarda exigia que a citação coubesse dentro
+    de UM trecho. Isso funcionava com chunks de 1.200 caracteres; quando a Fase 1d trocou o chunk
+    para 400 — por um motivo bom, medido e sem relação com esta função — passou a reprovar
+    **por construção** toda citação maior que 400 caracteres, ainda que legítima.
+
+    Medido no piloto: dos 13 barrados, **4 atravessavam trechos adjacentes** e 3 deles ACERTAVAM
+    o span do gold, com citações de 376, 438 e 541 caracteres. A guarda estava punindo o agente
+    por citar bem.
+
+    A pergunta certa nunca foi *"cabe num pedaço?"* e sim **"veio do material que o agente viu?"**.
+    Trechos vizinhos formam texto contínuo do contrato; o agente os leu em sequência e citar
+    através da fronteira é legítimo.
+    """
+    if not trechos:
+        return []
+    if not all("inicio" in t and "fim" in t for t in trechos):
+        return [t["texto"] for t in trechos]       # sem offsets (testes), cai no modo antigo
+    ordenados = sorted(trechos, key=lambda t: t["inicio"])
+    blocos: list[list] = []
+    for t in ordenados:
+        if blocos and t["inicio"] <= blocos[-1][1]:
+            anterior = blocos[-1]
+            # remonta sem duplicar a sobreposição
+            corte = anterior[1] - t["inicio"]
+            anterior[2] += t["texto"][corte:] if 0 <= corte <= len(t["texto"]) else t["texto"]
+            anterior[1] = max(anterior[1], t["fim"])
+        else:
+            blocos.append([t["inicio"], t["fim"], t["texto"]])
+    return [b[2] for b in blocos]
+
+
 def verificar(estado: Estado) -> Estado:
     """A guarda. Só pode converter `responde` em `nao_consta`, nunca o contrário.
 
@@ -107,7 +141,7 @@ def verificar(estado: Estado) -> Estado:
     if len(cit) < 12:
         return {**estado, "decisao": "nao_consta", "guarda_barrou": True,
                 "motivo_guarda": "citacao_vazia_ou_curta"}
-    if not any(cit in _normalizar(t["texto"]) for t in estado["trechos"]):
+    if not any(cit in _normalizar(b) for b in blocos_contiguos(estado["trechos"])):
         return {**estado, "decisao": "nao_consta", "guarda_barrou": True,
                 "motivo_guarda": "citacao_ausente_do_contexto"}
     return estado
