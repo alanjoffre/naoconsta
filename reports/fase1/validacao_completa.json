@@ -1,0 +1,62 @@
+{
+  "portao_v2": {
+    "metrica": "recall_em_12000chars",
+    "limiar": 0.85
+  },
+  "configs": {
+    "400/75": {
+      "n_chunks": 82622,
+      "n_consultas": 6702,
+      "segundos_embed": 1208.1,
+      "chunks_por_segundo": 68.4,
+      "k_por_orcamento": {
+        "6000": 15,
+        "12000": 30,
+        "24000": 60
+      },
+      "portao_v2_passou": true,
+      "recall_em_6000chars": 0.7729,
+      "ic95_em_6000chars": [
+        0.7627,
+        0.7828
+      ],
+      "recall_em_12000chars": 0.8815,
+      "ic95_em_12000chars": [
+        0.8736,
+        0.889
+      ],
+      "recall_em_24000chars": 0.9469,
+      "ic95_em_24000chars": [
+        0.9413,
+        0.952
+      ]
+    },
+    "300/60": {
+      "n_chunks": 111825,
+      "n_consultas": 6702,
+      "segundos_embed": 1404.1,
+      "chunks_por_segundo": 79.6,
+      "k_por_orcamento": {
+        "6000": 20,
+        "12000": 40,
+        "24000": 80
+      },
+      "portao_v2_passou": true,
+      "recall_em_6000chars": 0.7968,
+      "ic95_em_6000chars": [
+        0.787,
+        0.8062
+      ],
+      "recall_em_12000chars": 0.8947,
+      "ic95_em_12000chars": [
+        0.8871,
+        0.9018
+      ],
+      "recall_em_24000chars": 0.954,
+      "ic95_em_24000chars": [
+        0.9488,
+        0.9588
+      ]
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "n_contratos": 60,
+  "n_chunks": 2832,
+  "n_consultas": 799,
+  "semente": 20260803,
+  "modelos": {
+    "nomic-embed-text": {
+      "dims": 768,
+      "segundos": 32.4,
+      "chunks_por_segundo": 87.5,
+      "recall@1": 0.3242,
+      "recall@5": 0.6796,
+      "recall@10": 0.8148
+    },
+    "bge-m3": {
+      "dims": 1024,
+      "segundos": 82.5,
+      "chunks_por_segundo": 34.3,
+      "recall@1": 0.3442,
+      "recall@5": 0.627,
+      "recall@10": 0.761
+    }
+  },
+  "mcnemar": {
+    "@1": {
+      "bge_ganha": 90,
+      "nomic_ganha": 74,
+      "p": 0.2413895516562035
+    },
+    "@5": {
+      "bge_ganha": 66,
+      "nomic_ganha": 108,
+      "p": 0.001800199793547577
+    },
+    "@10": {
+      "bge_ganha": 39,
+      "nomic_ganha": 82,
+      "p": 0.00011547452744485193
+    }
+  }
+}

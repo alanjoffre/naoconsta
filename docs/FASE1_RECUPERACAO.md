@@ -130,15 +130,43 @@ publicar "67% de recall@5" sem baseline seria propaganda.
 - **Um só modelo de embedding.** `nomic-embed-text` (768d). Trocar por um modelo maior é a
   próxima alavanca óbvia e ainda não foi medida.
 
+## Desfecho: o portão v1 foi retirado por ser manipulável, e o v2 abriu
+
+As alavancas estão medidas em [`FASE1B_ALAVANCAS.md`](FASE1B_ALAVANCAS.md). Duas morreram
+(modelo maior: **−5,4 pp**; prefixo de tarefa: **−1,0 pp**) e a terceira revelou que **o portão
+`recall@10 ≥ 85%` que eu mesmo pré-registrei era manipulável por tamanho de chunk**: chunks de
+3.000 o atravessam com 87,7% sendo pior recuperação em qualquer orçamento justo de texto.
+
+Portão retirado e re-especificado em **orçamento de texto** — a mesma quantidade que a
+configuração atual já gastava, então a régua não afrouxou:
+
+> **Portão v2: `recall` com 12.000 caracteres de orçamento ≥ 85%, no conjunto completo.**
+
+Validado nos 510 contratos e 6.702 consultas (`fase1d_validar.py`):
+
+| configuração | 6.000 chars | **12.000 chars** | 24.000 chars | portão v2 |
+|---|---:|---:|---:|:---:|
+| 300/60 (k=40) | 79,7% | **89,5%** [88,7; 90,2] | 95,4% | ✅ |
+| 400/75 (k=30) | 77,3% | **88,1%** [87,4; 88,9] | 94,7% | ✅ |
+| 1200/200 (k=10) — atual | — | 78,8% | — | ❌ |
+
+**+9,3 pp sobre a configuração atual, com o texto entregue idêntico.** O teto não subiu: chunks de
+1.200 desperdiçavam orçamento.
+
+**Adotado: 400/75.** O 300/60 rende +1,4 pp, mas custa 35% mais vetores (111.825 × 82.622) e
+entrega **40 fragmentos** em vez de 30. Como a Fase 2 vai dar esses fragmentos a um LLM e a tese é
+sobre **abstenção**, prefiro a configuração menos picada pelo preço de 1,4 pp — e registro que
+*"40 cacos são piores que 30 para o agente"* é **hipótese não medida**, não fato.
+
 ## O que decide a Fase 2
 
-O portão está fechado em **78,8% < 85%**. Três caminhos, e todos são medíveis antes de codar agente:
+A Fase 2 começa, com **400/75 e orçamento de 12.000 caracteres (k=30), recall de 88,1%**.
 
-1. **Modelo de embedding maior** (`bge-m3`, 1024d) — a alavanca não testada, ~15 min de
-   reindexação, custo zero.
-2. **Chunker por cláusula** em vez de janela cega — provável ganho, e o CUAD tem a estrutura.
-3. **Baixar o portão para 78,8% e declarar o teto** — legítimo *se* declarado, porque um agente
-   com recall@10 de 78,8% ainda pode ser avaliado, desde que o teto entre em toda leitura da
-   Fase 3.
+Nenhuma das três saídas que eu havia listado foi usada: o modelo maior **piorou**, o chunker por
+cláusula não foi preciso, e **não baixei o portão** — troquei uma régua manipulável por uma justa
+e passei nela. O que **não** era opção, e não foi feito, é seguir para o LangGraph fingindo que o
+portão v1 tinha passado.
 
-O que **não** é opção é seguir para o LangGraph fingindo que o portão passou.
+O teto que entra em toda leitura da Fase 3: **11,9% das consultas respondíveis não têm o span no
+material entregue ao agente.** Abstenção correta nesses casos é comportamento certo pelo motivo
+errado, e a Fase 3 precisa separar as duas coisas.

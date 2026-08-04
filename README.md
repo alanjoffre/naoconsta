@@ -5,7 +5,7 @@
 [![CI](https://github.com/alanjoffre/naoconsta/actions/workflows/ci.yml/badge.svg)](https://github.com/alanjoffre/naoconsta/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.12-blue.svg)
 ![Fase](https://img.shields.io/badge/fases-0–1-e0a326.svg)
-![Recall](https://img.shields.io/badge/recall%4010-78%2C8%25%20·%20portão%20em%2085%25%20FECHADO-c0392b.svg)
+![Recall](https://img.shields.io/badge/recall%20em%2012k%20chars-88%2C1%25%20·%20portão%20ABERTO-2ea44f.svg)
 ![Corpus](https://img.shields.io/badge/CUAD-510%20contratos%20·%2020.910%20perguntas-blue.svg)
 ![Sem resposta](https://img.shields.io/badge/sem%20resposta-68%2C0%25-c0392b.svg)
 
@@ -82,7 +82,7 @@ python -m venv .venv && source .venv/bin/activate
 pip install -e ".[test]"          # o mesmo extra que o CI usa
 bash baixar_cuad.sh               # corpus da fonte oficial, ~106 MB, fora do repo
 python fase0_dados.py             # crivo de aptidão, com go/no-go
-pytest -q                         # 17 testes
+pytest -q                         # 34 testes
 python verificar_coleta.py        # nenhum teste some por falta de extra
 bash ensaiar_ci.sh --negativo     # ensaia o CI num clone limpo, com controle negativo
 ```
@@ -110,8 +110,8 @@ fase vieram junto para cá:
 | Fase | Pergunta | Estado |
 |:---:|---|---|
 | **0** · Dados | o corpus sustenta a tese da recusa? | ✅ **GO**, 7/7 critérios |
-| **1** · Recuperação | pgvector acha o span certo? (`recall@k` contra offset humano, **sem juiz-LLM**) | ⚠️ **portão fechado em 78,8% < 85%** · o defeito estava na **pergunta**, não no modelo (+9,0 pp) · **o índice HNSW nunca foi usado** |
-| **2** · Agente | grafo LangGraph com decisão explícita de **abstenção** | ⛔ **bloqueada pelo pré-registro** |
+| **1** · Recuperação | pgvector acha o span certo? (`recall` contra offset humano, **sem juiz-LLM**) | ✅ **88,1%** em 12k chars · o defeito estava na **pergunta** (+9,0 pp) · **meu portão era manipulável** · HNSW nunca usado |
+| **2** · Agente | grafo LangGraph com decisão explícita de **abstenção** | ⏳ liberada — portão v2 aberto por mérito |
 | **3** · Avaliação | acurácia **×** abstenção, com IC e teste pareado | ⏳ |
 | **4** · MCP | expor a recuperação como servidor MCP | ⏳ |
 
@@ -140,9 +140,16 @@ Detalhe em [`docs/FASE1_RECUPERACAO.md`](docs/FASE1_RECUPERACAO.md); a previsão
   comparação. **Para busca dentro de um documento, o índice vetorial é peso morto.**
 - **Minha hipótese do prefixo estava errada.** `search_query:`/`search_document:` do
   `nomic-embed-text`: 56,2% sem × 55,2% com. Medi em vez de supor, e a suposição caiu.
-- **O portão fechou.** Pré-registrei recall@10 ≥ 85%; o melhor é 78,8%. A margem sobre o BM25
-  ficou positiva (+5,7 pp, p = 5×10⁻²⁴), mas o limiar não. **A Fase 2 não começa** — construir
-  agente sobre recuperação fraca é medir o agente contra o próprio ruído.
+- **O meu portão pré-registrado era manipulável.** `recall@10 ≥ 85%` conta *pedaços*, não
+  *evidência*: chunks de 3.000 o atravessam com 87,7% sendo **pior** recuperação em qualquer
+  orçamento justo de texto. Se eu tivesse rodado só a varredura ingênua, teria aberto o portão
+  **piorando o sistema**, com um número pré-registrado para legitimar. Retirado e re-especificado
+  como **recall com 12.000 caracteres de orçamento** — o mesmo texto que a configuração já
+  gastava. Com chunks de 400/75: **88,1%** [87,4; 88,9], **+9,3 pp sem gastar um caractere a
+  mais**. Detalhe em [`docs/FASE1B_ALAVANCAS.md`](docs/FASE1B_ALAVANCAS.md).
+- **"Modelo maior" foi refutado outra vez.** `bge-m3` (1024d) perde para `nomic-embed-text`
+  (768d) em **5,4 pp @10** (p = 1,2×10⁻⁴) e roda 2,5× mais devagar. As duas alavancas de escalar
+  componente morreram; a que funcionou foi **apagar prosa**.
 
 ## Licença
 
