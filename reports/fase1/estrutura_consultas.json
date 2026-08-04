@@ -1,0 +1,236 @@
+{
+  "n_contratos": 510,
+  "n_perguntas": 20910,
+  "n_textos_de_pergunta_distintos": 41,
+  "pergunta_mais_repetida": 510,
+  "spans": {
+    "n": 13823,
+    "media": 262.0,
+    "mediana": 196,
+    "p90": 587,
+    "p99": 1330,
+    "max": 3884
+  },
+  "spans_por_pergunta_respondivel": {
+    "media": 2.06,
+    "max": 55
+  },
+  "dispersao_mediana_dos_spans": 0.04,
+  "fracao_de_spans_que_cabem_no_chunk": {
+    "400": 0.7862,
+    "800": 0.9569,
+    "1200": 0.9855,
+    "2000": 0.9975,
+    "3000": 0.9997
+  },
+  "categorias": {
+    "Affiliate License-Licensee": {
+      "total": 510,
+      "impossiveis": 451,
+      "taxa_impossivel": 0.8843
+    },
+    "Affiliate License-Licensor": {
+      "total": 510,
+      "impossiveis": 487,
+      "taxa_impossivel": 0.9549
+    },
+    "Agreement Date": {
+      "total": 510,
+      "impossiveis": 40,
+      "taxa_impossivel": 0.0784
+    },
+    "Anti-Assignment": {
+      "total": 510,
+      "impossiveis": 136,
+      "taxa_impossivel": 0.2667
+    },
+    "Audit Rights": {
+      "total": 510,
+      "impossiveis": 296,
+      "taxa_impossivel": 0.5804
+    },
+    "Cap On Liability": {
+      "total": 510,
+      "impossiveis": 235,
+      "taxa_impossivel": 0.4608
+    },
+    "Change Of Control": {
+      "total": 510,
+      "impossiveis": 389,
+      "taxa_impossivel": 0.7627
+    },
+    "Competitive Restriction Exception": {
+      "total": 510,
+      "impossiveis": 434,
+      "taxa_impossivel": 0.851
+    },
+    "Covenant Not To Sue": {
+      "total": 510,
+      "impossiveis": 410,
+      "taxa_impossivel": 0.8039
+    },
+    "Document Name": {
+      "total": 510,
+      "impossiveis": 0,
+      "taxa_impossivel": 0.0
+    },
+    "Effective Date": {
+      "total": 510,
+      "impossiveis": 120,
+      "taxa_impossivel": 0.2353
+    },
+    "Exclusivity": {
+      "total": 510,
+      "impossiveis": 330,
+      "taxa_impossivel": 0.6471
+    },
+    "Expiration Date": {
+      "total": 510,
+      "impossiveis": 97,
+      "taxa_impossivel": 0.1902
+    },
+    "Governing Law": {
+      "total": 510,
+      "impossiveis": 73,
+      "taxa_impossivel": 0.1431
+    },
+    "Insurance": {
+      "total": 510,
+      "impossiveis": 344,
+      "taxa_impossivel": 0.6745
+    },
+    "Ip Ownership Assignment": {
+      "total": 510,
+      "impossiveis": 386,
+      "taxa_impossivel": 0.7569
+    },
+    "Irrevocable Or Perpetual License": {
+      "total": 510,
+      "impossiveis": 440,
+      "taxa_impossivel": 0.8627
+    },
+    "Joint Ip Ownership": {
+      "total": 510,
+      "impossiveis": 464,
+      "taxa_impossivel": 0.9098
+    },
+    "License Grant": {
+      "total": 510,
+      "impossiveis": 255,
+      "taxa_impossivel": 0.5
+    },
+    "Liquidated Damages": {
+      "total": 510,
+      "impossiveis": 449,
+      "taxa_impossivel": 0.8804
+    },
+    "Minimum Commitment": {
+      "total": 510,
+      "impossiveis": 345,
+      "taxa_impossivel": 0.6765
+    },
+    "Most Favored Nation": {
+      "total": 510,
+      "impossiveis": 482,
+      "taxa_impossivel": 0.9451
+    },
+    "No-Solicit Of Customers": {
+      "total": 510,
+      "impossiveis": 476,
+      "taxa_impossivel": 0.9333
+    },
+    "No-Solicit Of Employees": {
+      "total": 510,
+      "impossiveis": 451,
+      "taxa_impossivel": 0.8843
+    },
+    "Non-Compete": {
+      "total": 510,
+      "impossiveis": 391,
+      "taxa_impossivel": 0.7667
+    },
+    "Non-Disparagement": {
+      "total": 510,
+      "impossiveis": 472,
+      "taxa_impossivel": 0.9255
+    },
+    "Non-Transferable License": {
+      "total": 510,
+      "impossiveis": 372,
+      "taxa_impossivel": 0.7294
+    },
+    "Notice Period To Terminate Renewal": {
+      "total": 510,
+      "impossiveis": 399,
+      "taxa_impossivel": 0.7824
+    },
+    "Parties": {
+      "total": 510,
+      "impossiveis": 1,
+      "taxa_impossivel": 0.002
+    },
+    "Post-Termination Services": {
+      "total": 510,
+      "impossiveis": 328,
+      "taxa_impossivel": 0.6431
+    },
+    "Price Restrictions": {
+      "total": 510,
+      "impossiveis": 495,
+      "taxa_impossivel": 0.9706
+    },
+    "Renewal Term": {
+      "total": 510,
+      "impossiveis": 334,
+      "taxa_impossivel": 0.6549
+    },
+    "Revenue/Profit Sharing": {
+      "total": 510,
+      "impossiveis": 344,
+      "taxa_impossivel": 0.6745
+    },
+    "Rofr/Rofo/Rofn": {
+      "total": 510,
+      "impossiveis": 425,
+      "taxa_impossivel": 0.8333
+    },
+    "Source Code Escrow": {
+      "total": 510,
+      "impossiveis": 497,
+      "taxa_impossivel": 0.9745
+    },
+    "Termination For Convenience": {
+      "total": 510,
+      "impossiveis": 327,
+      "taxa_impossivel": 0.6412
+    },
+    "Third Party Beneficiary": {
+      "total": 510,
+      "impossiveis": 478,
+      "taxa_impossivel": 0.9373
+    },
+    "Uncapped Liability": {
+      "total": 510,
+      "impossiveis": 399,
+      "taxa_impossivel": 0.7824
+    },
+    "Unlimited/All-You-Can-Eat-License": {
+      "total": 510,
+      "impossiveis": 493,
+      "taxa_impossivel": 0.9667
+    },
+    "Volume Restriction": {
+      "total": 510,
+      "impossiveis": 428,
+      "taxa_impossivel": 0.8392
+    },
+    "Warranty Duration": {
+      "total": 510,
+      "impossiveis": 435,
+      "taxa_impossivel": 0.8529
+    }
+  },
+  "taxa_impossivel_min": 0.0,
+  "taxa_impossivel_mediana": 0.7667,
+  "taxa_impossivel_max": 0.9745
+}
