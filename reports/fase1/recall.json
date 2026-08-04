@@ -1,0 +1,524 @@
+{
+  "n_consultas_respondiveis": 6702,
+  "n_com_gold": 6702,
+  "chunk": 1200,
+  "sobreposicao": 200,
+  "semente": 20260803,
+  "rrf_k": 60,
+  "hnsw_usado_pelo_planner": false,
+  "recall": {
+    "denso_bruto": {
+      "@1": {
+        "acertos": 1896,
+        "n": 6702,
+        "taxa": 0.2829,
+        "ic95": [
+          0.2722,
+          0.2938
+        ]
+      },
+      "@3": {
+        "acertos": 3143,
+        "n": 6702,
+        "taxa": 0.469,
+        "ic95": [
+          0.457,
+          0.4809
+        ]
+      },
+      "@5": {
+        "acertos": 3771,
+        "n": 6702,
+        "taxa": 0.5627,
+        "ic95": [
+          0.5508,
+          0.5745
+        ]
+      },
+      "@10": {
+        "acertos": 4681,
+        "n": 6702,
+        "taxa": 0.6984,
+        "ic95": [
+          0.6873,
+          0.7093
+        ]
+      }
+    },
+    "denso_enxuto": {
+      "@1": {
+        "acertos": 2229,
+        "n": 6702,
+        "taxa": 0.3326,
+        "ic95": [
+          0.3214,
+          0.344
+        ]
+      },
+      "@3": {
+        "acertos": 3666,
+        "n": 6702,
+        "taxa": 0.547,
+        "ic95": [
+          0.5351,
+          0.5589
+        ]
+      },
+      "@5": {
+        "acertos": 4375,
+        "n": 6702,
+        "taxa": 0.6528,
+        "ic95": [
+          0.6413,
+          0.6641
+        ]
+      },
+      "@10": {
+        "acertos": 5281,
+        "n": 6702,
+        "taxa": 0.788,
+        "ic95": [
+          0.778,
+          0.7976
+        ]
+      }
+    },
+    "bm25": {
+      "@1": {
+        "acertos": 2264,
+        "n": 6702,
+        "taxa": 0.3378,
+        "ic95": [
+          0.3266,
+          0.3492
+        ]
+      },
+      "@3": {
+        "acertos": 3572,
+        "n": 6702,
+        "taxa": 0.533,
+        "ic95": [
+          0.521,
+          0.5449
+        ]
+      },
+      "@5": {
+        "acertos": 4157,
+        "n": 6702,
+        "taxa": 0.6203,
+        "ic95": [
+          0.6086,
+          0.6318
+        ]
+      },
+      "@10": {
+        "acertos": 4900,
+        "n": 6702,
+        "taxa": 0.7311,
+        "ic95": [
+          0.7204,
+          0.7416
+        ]
+      }
+    },
+    "hibrido_rrf": {
+      "@1": {
+        "acertos": 2631,
+        "n": 6702,
+        "taxa": 0.3926,
+        "ic95": [
+          0.3809,
+          0.4043
+        ]
+      },
+      "@3": {
+        "acertos": 3918,
+        "n": 6702,
+        "taxa": 0.5846,
+        "ic95": [
+          0.5728,
+          0.5963
+        ]
+      },
+      "@5": {
+        "acertos": 4516,
+        "n": 6702,
+        "taxa": 0.6738,
+        "ic95": [
+          0.6625,
+          0.685
+        ]
+      },
+      "@10": {
+        "acertos": 5267,
+        "n": 6702,
+        "taxa": 0.7859,
+        "ic95": [
+          0.7759,
+          0.7955
+        ]
+      }
+    },
+    "primeiros": {
+      "@1": {
+        "acertos": 1632,
+        "n": 6702,
+        "taxa": 0.2435,
+        "ic95": [
+          0.2334,
+          0.2539
+        ]
+      },
+      "@3": {
+        "acertos": 2068,
+        "n": 6702,
+        "taxa": 0.3086,
+        "ic95": [
+          0.2976,
+          0.3197
+        ]
+      },
+      "@5": {
+        "acertos": 2395,
+        "n": 6702,
+        "taxa": 0.3574,
+        "ic95": [
+          0.346,
+          0.3689
+        ]
+      },
+      "@10": {
+        "acertos": 3095,
+        "n": 6702,
+        "taxa": 0.4618,
+        "ic95": [
+          0.4499,
+          0.4738
+        ]
+      }
+    },
+    "aleatorio": {
+      "@1": {
+        "acertos": 340,
+        "n": 6702,
+        "taxa": 0.0507,
+        "ic95": [
+          0.0457,
+          0.0562
+        ]
+      },
+      "@3": {
+        "acertos": 924,
+        "n": 6702,
+        "taxa": 0.1379,
+        "ic95": [
+          0.1298,
+          0.1463
+        ]
+      },
+      "@5": {
+        "acertos": 1426,
+        "n": 6702,
+        "taxa": 0.2128,
+        "ic95": [
+          0.2031,
+          0.2227
+        ]
+      },
+      "@10": {
+        "acertos": 2546,
+        "n": 6702,
+        "taxa": 0.3799,
+        "ic95": [
+          0.3683,
+          0.3916
+        ]
+      }
+    }
+  },
+  "mcnemar": {
+    "denso_enxuto_x_bm25@5": {
+      "a_ganha": 947,
+      "b_ganha": 729,
+      "p": 1.1098264324253046e-07
+    },
+    "denso_enxuto_x_bm25@10": {
+      "a_ganha": 906,
+      "b_ganha": 525,
+      "p": 5.23338832205847e-24
+    },
+    "denso_enxuto_x_denso_bruto@5": {
+      "a_ganha": 743,
+      "b_ganha": 139,
+      "p": 2.1287160450702635e-100
+    },
+    "denso_enxuto_x_denso_bruto@10": {
+      "a_ganha": 680,
+      "b_ganha": 80,
+      "p": 2.044226706845058e-119
+    },
+    "hibrido_rrf_x_denso_enxuto@5": {
+      "a_ganha": 567,
+      "b_ganha": 426,
+      "p": 8.594920185046942e-06
+    },
+    "hibrido_rrf_x_denso_enxuto@10": {
+      "a_ganha": 408,
+      "b_ganha": 422,
+      "p": 0.6518451014002082
+    }
+  },
+  "por_categoria": {
+    "Affiliate License-Licensee": {
+      "denso_enxuto": 0.678,
+      "bm25": 0.5254,
+      "primeiros": 0.1356,
+      "n": 59
+    },
+    "Affiliate License-Licensor": {
+      "denso_enxuto": 0.6522,
+      "bm25": 0.6087,
+      "primeiros": 0.087,
+      "n": 23
+    },
+    "Agreement Date": {
+      "denso_enxuto": 0.4064,
+      "bm25": 0.2617,
+      "primeiros": 0.9043,
+      "n": 470
+    },
+    "Anti-Assignment": {
+      "denso_enxuto": 0.8877,
+      "bm25": 0.8422,
+      "primeiros": 0.0428,
+      "n": 374
+    },
+    "Audit Rights": {
+      "denso_enxuto": 0.7944,
+      "bm25": 0.8925,
+      "primeiros": 0.0467,
+      "n": 214
+    },
+    "Cap On Liability": {
+      "denso_enxuto": 0.9164,
+      "bm25": 0.8473,
+      "primeiros": 0.0291,
+      "n": 275
+    },
+    "Change Of Control": {
+      "denso_enxuto": 0.8264,
+      "bm25": 0.9008,
+      "primeiros": 0.0331,
+      "n": 121
+    },
+    "Competitive Restriction Exception": {
+      "denso_enxuto": 0.6053,
+      "bm25": 0.4605,
+      "primeiros": 0.1579,
+      "n": 76
+    },
+    "Covenant Not To Sue": {
+      "denso_enxuto": 0.26,
+      "bm25": 0.57,
+      "primeiros": 0.13,
+      "n": 100
+    },
+    "Document Name": {
+      "denso_enxuto": 0.5,
+      "bm25": 0.2353,
+      "primeiros": 0.9039,
+      "n": 510
+    },
+    "Effective Date": {
+      "denso_enxuto": 0.441,
+      "bm25": 0.5923,
+      "primeiros": 0.8205,
+      "n": 390
+    },
+    "Exclusivity": {
+      "denso_enxuto": 0.45,
+      "bm25": 0.3333,
+      "primeiros": 0.3611,
+      "n": 180
+    },
+    "Expiration Date": {
+      "denso_enxuto": 0.8354,
+      "bm25": 0.7772,
+      "primeiros": 0.3002,
+      "n": 413
+    },
+    "Governing Law": {
+      "denso_enxuto": 0.8352,
+      "bm25": 0.881,
+      "primeiros": 0.0366,
+      "n": 437
+    },
+    "Insurance": {
+      "denso_enxuto": 0.9337,
+      "bm25": 0.9217,
+      "primeiros": 0.0301,
+      "n": 166
+    },
+    "Ip Ownership Assignment": {
+      "denso_enxuto": 0.6129,
+      "bm25": 0.5081,
+      "primeiros": 0.0565,
+      "n": 124
+    },
+    "Irrevocable Or Perpetual License": {
+      "denso_enxuto": 0.7,
+      "bm25": 0.9143,
+      "primeiros": 0.1143,
+      "n": 70
+    },
+    "Joint Ip Ownership": {
+      "denso_enxuto": 0.8261,
+      "bm25": 0.6957,
+      "primeiros": 0.0,
+      "n": 46
+    },
+    "License Grant": {
+      "denso_enxuto": 0.6627,
+      "bm25": 0.7098,
+      "primeiros": 0.349,
+      "n": 255
+    },
+    "Liquidated Damages": {
+      "denso_enxuto": 0.6557,
+      "bm25": 0.6885,
+      "primeiros": 0.0984,
+      "n": 61
+    },
+    "Minimum Commitment": {
+      "denso_enxuto": 0.5333,
+      "bm25": 0.7515,
+      "primeiros": 0.2,
+      "n": 165
+    },
+    "Most Favored Nation": {
+      "denso_enxuto": 0.3571,
+      "bm25": 0.4286,
+      "primeiros": 0.0714,
+      "n": 28
+    },
+    "No-Solicit Of Customers": {
+      "denso_enxuto": 0.5588,
+      "bm25": 0.5,
+      "primeiros": 0.1765,
+      "n": 34
+    },
+    "No-Solicit Of Employees": {
+      "denso_enxuto": 0.9153,
+      "bm25": 0.7119,
+      "primeiros": 0.0339,
+      "n": 59
+    },
+    "Non-Compete": {
+      "denso_enxuto": 0.6723,
+      "bm25": 0.3697,
+      "primeiros": 0.1849,
+      "n": 119
+    },
+    "Non-Disparagement": {
+      "denso_enxuto": 0.5526,
+      "bm25": 0.3947,
+      "primeiros": 0.0263,
+      "n": 38
+    },
+    "Non-Transferable License": {
+      "denso_enxuto": 0.5435,
+      "bm25": 0.7101,
+      "primeiros": 0.2464,
+      "n": 138
+    },
+    "Notice Period To Terminate Renewal": {
+      "denso_enxuto": 0.9099,
+      "bm25": 0.9009,
+      "primeiros": 0.2342,
+      "n": 111
+    },
+    "Parties": {
+      "denso_enxuto": 0.3851,
+      "bm25": 0.2083,
+      "primeiros": 0.9941,
+      "n": 509
+    },
+    "Post-Termination Services": {
+      "denso_enxuto": 0.7308,
+      "bm25": 0.7473,
+      "primeiros": 0.0549,
+      "n": 182
+    },
+    "Price Restrictions": {
+      "denso_enxuto": 0.4,
+      "bm25": 0.5333,
+      "primeiros": 0.2,
+      "n": 15
+    },
+    "Renewal Term": {
+      "denso_enxuto": 0.9318,
+      "bm25": 0.9602,
+      "primeiros": 0.267,
+      "n": 176
+    },
+    "Revenue/Profit Sharing": {
+      "denso_enxuto": 0.4398,
+      "bm25": 0.4699,
+      "primeiros": 0.2108,
+      "n": 166
+    },
+    "Rofr/Rofo/Rofn": {
+      "denso_enxuto": 0.6235,
+      "bm25": 0.7882,
+      "primeiros": 0.0824,
+      "n": 85
+    },
+    "Source Code Escrow": {
+      "denso_enxuto": 1.0,
+      "bm25": 0.9231,
+      "primeiros": 0.1538,
+      "n": 13
+    },
+    "Termination For Convenience": {
+      "denso_enxuto": 0.8907,
+      "bm25": 0.8907,
+      "primeiros": 0.1366,
+      "n": 183
+    },
+    "Third Party Beneficiary": {
+      "denso_enxuto": 0.5938,
+      "bm25": 0.7812,
+      "primeiros": 0.0625,
+      "n": 32
+    },
+    "Uncapped Liability": {
+      "denso_enxuto": 0.955,
+      "bm25": 0.8829,
+      "primeiros": 0.0,
+      "n": 111
+    },
+    "Unlimited/All-You-Can-Eat-License": {
+      "denso_enxuto": 0.4706,
+      "bm25": 0.8235,
+      "primeiros": 0.2941,
+      "n": 17
+    },
+    "Volume Restriction": {
+      "denso_enxuto": 0.2195,
+      "bm25": 0.2561,
+      "primeiros": 0.2805,
+      "n": 82
+    },
+    "Warranty Duration": {
+      "denso_enxuto": 0.7733,
+      "bm25": 0.64,
+      "primeiros": 0.0667,
+      "n": 75
+    }
+  },
+  "categorias_vencidas_em_recall5": {
+    "denso_enxuto": 21,
+    "bm25": 19,
+    "empate": 1
+  }
+}

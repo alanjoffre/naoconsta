@@ -1,0 +1,19 @@
+{
+  "n_contratos": 510,
+  "n_chunks": 26952,
+  "n_consultas": 20910,
+  "n_consultas_respondiveis": 6702,
+  "chunk": 1200,
+  "sobreposicao": 200,
+  "modelo_embedding": "nomic-embed-text",
+  "dims": 768,
+  "segundos": {
+    "carga_e_fatiamento": 0.32,
+    "embeddings": 438.13,
+    "copy": 1.42,
+    "hnsw": 12.88
+  },
+  "chunks_por_segundo": 61.5,
+  "linhas_no_banco": 26952,
+  "tamanho_tabela": "248 MB"
+}

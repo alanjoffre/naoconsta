@@ -4,7 +4,8 @@
 
 [![CI](https://github.com/alanjoffre/naoconsta/actions/workflows/ci.yml/badge.svg)](https://github.com/alanjoffre/naoconsta/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.12-blue.svg)
-![Fase](https://img.shields.io/badge/fase-0%20(dados)-e0a326.svg)
+![Fase](https://img.shields.io/badge/fases-0–1-e0a326.svg)
+![Recall](https://img.shields.io/badge/recall%4010-78%2C8%25%20·%20portão%20em%2085%25%20FECHADO-c0392b.svg)
 ![Corpus](https://img.shields.io/badge/CUAD-510%20contratos%20·%2020.910%20perguntas-blue.svg)
 ![Sem resposta](https://img.shields.io/badge/sem%20resposta-68%2C0%25-c0392b.svg)
 
@@ -109,10 +110,39 @@ fase vieram junto para cá:
 | Fase | Pergunta | Estado |
 |:---:|---|---|
 | **0** · Dados | o corpus sustenta a tese da recusa? | ✅ **GO**, 7/7 critérios |
-| **1** · Recuperação | pgvector acha o span certo? (`recall@k` contra offset humano, **sem juiz-LLM**) | ⏳ |
-| **2** · Agente | grafo LangGraph com decisão explícita de **abstenção** | ⏳ |
+| **1** · Recuperação | pgvector acha o span certo? (`recall@k` contra offset humano, **sem juiz-LLM**) | ⚠️ **portão fechado em 78,8% < 85%** · o defeito estava na **pergunta**, não no modelo (+9,0 pp) · **o índice HNSW nunca foi usado** |
+| **2** · Agente | grafo LangGraph com decisão explícita de **abstenção** | ⛔ **bloqueada pelo pré-registro** |
 | **3** · Avaliação | acurácia **×** abstenção, com IC e teste pareado | ⏳ |
 | **4** · MCP | expor a recuperação como servidor MCP | ⏳ |
+
+## Fase 1 — o que a medição refutou
+
+Detalhe em [`docs/FASE1_RECUPERACAO.md`](docs/FASE1_RECUPERACAO.md); a previsão está em
+[`docs/FASE1_PREREGISTRO.md`](docs/FASE1_PREREGISTRO.md), **commitada antes de rodar**.
+
+| sistema | recall@5 | recall@10 |
+|---|---:|---:|
+| `denso_bruto` *(config. pré-registrada)* | 56,3% | 69,8% |
+| `denso_enxuto` | 65,3% | **78,8%** |
+| `bm25` | 62,0% | 73,1% |
+| `hibrido_rrf` | **67,4%** | 78,6% |
+| `primeiros` *(espantalho posicional)* | 35,7% | 46,2% |
+| `aleatorio` *(piso da sorte)* | 21,3% | 38,0% |
+
+- **O defeito estava na PERGUNTA, não no modelo.** As 41 perguntas do CUAD abrem com o mesmo
+  preâmbulo (*"Highlight the parts (if any)… reviewed by a lawyer"*), e isso deixava o cosseno
+  médio entre perguntas **diferentes** em **0,735** — 41 consultas quase colineares. Apagando o
+  preâmbulo: 0,594, e **+9,0 pp** de recall (McNemar p = 2×10⁻¹⁰⁰). O BM25 nunca sofreu disso, e
+  era só por isso que parecia melhor. *Falha mecânica se conserta em código — aqui, apagando prosa.*
+- **O índice HNSW nunca foi usado.** Montei um sistema para medir a armadilha do filtro por
+  metadado; ele deu idêntico ao exato nos 4 valores de k porque o `EXPLAIN` revela `top-N
+  heapsort` — com `WHERE contrato = ?` pegando 0,2% das linhas, o planner ignora o HNSW. Retirei a
+  comparação. **Para busca dentro de um documento, o índice vetorial é peso morto.**
+- **Minha hipótese do prefixo estava errada.** `search_query:`/`search_document:` do
+  `nomic-embed-text`: 56,2% sem × 55,2% com. Medi em vez de supor, e a suposição caiu.
+- **O portão fechou.** Pré-registrei recall@10 ≥ 85%; o melhor é 78,8%. A margem sobre o BM25
+  ficou positiva (+5,7 pp, p = 5×10⁻²⁴), mas o limiar não. **A Fase 2 não começa** — construir
+  agente sobre recuperação fraca é medir o agente contra o próprio ruído.
 
 ## Licença
 

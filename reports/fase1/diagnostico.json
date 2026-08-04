@@ -1,0 +1,13 @@
+{
+  "cosseno_medio_entre_perguntas": {
+    "original": 0.7345,
+    "enxuto": 0.5936
+  },
+  "recall5": {
+    "denso_original": 0.5627,
+    "denso_enxuto": 0.6528,
+    "bm25": 0.6203,
+    "hibrido_rrf": 0.6267
+  },
+  "n": 6702
+}

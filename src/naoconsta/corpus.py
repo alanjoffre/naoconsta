@@ -21,6 +21,7 @@ contrato — o padrão multi-tenant de banco vetorial, não um atalho.
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -51,6 +52,28 @@ class Consulta:
     pergunta: str
     respondivel: bool
     spans: tuple[tuple[int, int], ...]   # (inicio, fim) em caracteres do contrato
+
+
+_PREAMBULO = re.compile(
+    r"^highlight the parts \(if any\) of this contract related to [\"“]?(.+?)[\"”]?\s*"
+    r"that should be reviewed by a lawyer\.?\s*(details:)?\s*", re.I | re.S)
+
+
+def enxugar(pergunta: str) -> str:
+    """Tira o preâmbulo idêntico que abre as 41 perguntas do CUAD.
+
+    Não é cosmética: **medido**, o cosseno médio entre perguntas DIFERENTES é 0,735 (máx 0,944)
+    com o preâmbulo e 0,594 sem — o texto comum domina o vetor e as 41 consultas ficam quase
+    colineares, então o denso não tem o que discriminar. O recall@5 sai de 56,3% para 65,3%.
+
+    O BM25 não sofre com isso (pontua termo a termo), o que explica por que ele vencia o denso
+    antes do conserto — e por que a conclusão se inverte depois.
+    """
+    m = _PREAMBULO.match(pergunta.strip())
+    if not m:
+        return pergunta
+    tema, resto = m.group(1).strip(), pergunta[m.end():].strip()
+    return f"{tema}. {resto}" if resto else tema
 
 
 def fatiar(contrato: str, texto: str) -> list[Pedaco]:
