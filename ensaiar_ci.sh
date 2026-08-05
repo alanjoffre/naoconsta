@@ -54,9 +54,13 @@ passo() {
 
 echo
 echo "=== sequencia do .github/workflows/ci.yml ==="
+# Esta lista TEM de espelhar .github/workflows/ci.yml passo a passo. Ja errei aqui: acrescentei
+# a auditoria de fidelidade ao CI e esqueci de acrescentar ao ensaio, que passou a aprovar uma
+# sequencia mais curta que a do alvo — o mesmo defeito que o ensaio existe para evitar.
 passo "1. Lint (ruff)"       ruff check .
 passo "2. Coleta completa"   python verificar_coleta.py
 passo "3. Testes"            pytest -q
+passo "4. Auditoria de fidelidade" python auditar_documentacao.py
 
 echo
 [ "$falhou" -eq 0 ] && echo "ENSAIO VERDE — mas o veredito e a execucao do Actions, nao esta." \
