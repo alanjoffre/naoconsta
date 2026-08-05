@@ -204,6 +204,38 @@ Detalhe em [`docs/FASE1_RECUPERACAO.md`](docs/FASE1_RECUPERACAO.md); a previsão
   (768d) em **5,4 pp @10** (p = 1,2×10⁻⁴) e roda 2,5× mais devagar. As duas alavancas de escalar
   componente morreram; a que funcionou foi **apagar prosa**.
 
+## 🎯 Backlog declarado
+
+Nenhum item é surpresa: todos foram declarados na fase em que apareceram, com o custo de deixá-los
+abertos.
+
+**Aberto — quatro itens:**
+
+- **Fase 2b: um SUT capaz de responder.** É o contraste que falta, e o mais importante da lista.
+  O `qwen2.5:7b` abstém em 90% e acerta 33% das respondíveis: com ele a recusa está fácil e o eixo
+  que discrimina é a resposta. Só um modelo que **sabe responder** testa se a tese volta a valer.
+  Duas rotas medidas: `llama-3.3-70b` no Groq (grátis, mas o teto é de **100 mil tokens/dia** e
+  200 consultas custam 559 mil — cabe em ~6 janelas, e o runner é retomável) ou Haiku 4.5 por
+  **~US$ 0,74** numa rodada só.
+- **O servidor MCP não é exercitado no CI.** Os 11 testes de lógica rodam; a prova ponta a ponta
+  precisa de Postgres e Ollama, que o runner não tem. Ela é **manual** — e a Fase 4 mostrou
+  exatamente o que isso deixa passar: 68 testes verdes sobre um servidor que não subia.
+- **Chunk de 300/60 rende +1,4 pp e não foi adotado.** A 12.000 caracteres ele faz 89,5% contra os
+  88,1% do 400/75 escolhido. Preterido porque custa **35% mais vetores** e entrega **40 fragmentos
+  em vez de 30** — e "40 cacos são piores que 30 para o agente" é **hipótese não medida**,
+  registrada como tal. Medir isso é uma decisão, não uma dívida.
+- **Chunker por cláusula.** A varredura da Fase 1c foi monotônica até o menor tamanho testado, sem
+  joelho: nunca verifiquei se um fatiamento que respeita fronteiras de cláusula bate o corte cego.
+  O CUAD tem a estrutura para isso.
+
+**Fora de escopo, e por quê:**
+
+- **Sem autenticação no servidor MCP** — o transporte é stdio, que implica execução local. Expor
+  por rede exigiria autenticação, e isso mudaria o desenho.
+- **Nenhum juiz-LLM em nenhuma fase.** É restrição deliberada: o gold é offset de caractere
+  anotado por humano, e a régua é aritmética de intervalos. Vale para a recuperação **e** para o
+  agente — a guarda de procedência é comparação de string, não julgamento de modelo.
+
 ## Licença
 
 Código sob MIT. O corpus **CUAD** é do [Atticus Project](https://www.atticusprojectai.org/cuad),
