@@ -4,7 +4,8 @@
 
 [![CI](https://github.com/alanjoffre/naoconsta/actions/workflows/ci.yml/badge.svg)](https://github.com/alanjoffre/naoconsta/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.12-blue.svg)
-![Fase](https://img.shields.io/badge/fases-0–1-e0a326.svg)
+![Fase](https://img.shields.io/badge/fases-0–4-e0a326.svg)
+![MCP](https://img.shields.io/badge/MCP-3%20ferramentas-blue.svg)
 ![Recall](https://img.shields.io/badge/recall%20em%2012k%20chars-88%2C1%25%20·%20portão%20ABERTO-2ea44f.svg)
 ![Corpus](https://img.shields.io/badge/CUAD-510%20contratos%20·%2020.910%20perguntas-blue.svg)
 ![Sem resposta](https://img.shields.io/badge/sem%20resposta-68%2C0%25-c0392b.svg)
@@ -82,9 +83,10 @@ python -m venv .venv && source .venv/bin/activate
 pip install -e ".[test]"          # o mesmo extra que o CI usa
 bash baixar_cuad.sh               # corpus da fonte oficial, ~106 MB, fora do repo
 python fase0_dados.py             # crivo de aptidão, com go/no-go
-pytest -q                         # 34 testes
+pytest -q                         # 68 testes
 python verificar_coleta.py        # nenhum teste some por falta de extra
 bash ensaiar_ci.sh --negativo     # ensaia o CI num clone limpo, com controle negativo
+python -m naoconsta.servidor_mcp  # servidor MCP (stdio) — prove com: python provar_mcp.py
 ```
 
 ## Engenharia, desde o commit nº 1
@@ -114,7 +116,25 @@ fase vieram junto para cá:
 | **2** · Agente | grafo LangGraph com **guarda de procedência** | ✅ **62,0%** (124/200) · ❌ **3 de 5 previsões refutadas** · o modo de falha é o **oposto** do previsto · ❌ **a guarda tinha defeito meu** |
 | **2b** · SUT capaz | o eixo da recusa volta a discriminar com um modelo que sabe responder? | ⏳ **aberta** — é o contraste que falta |
 | **3** · Avaliação | acurácia **×** abstenção, sem juiz-LLM | ✅ integrada à Fase 2 |
-| **4** · MCP | expor a recuperação como servidor MCP | ⏳ |
+| **4** · MCP | expor a recuperação como servidor MCP | ✅ **3 ferramentas**, provado ponta a ponta · ❌ **68 testes passavam com o servidor quebrado** |
+
+## Fase 4 — o servidor que não responde, e 68 testes verdes sobre um servidor quebrado
+
+Detalhe em [`docs/FASE4_MCP.md`](docs/FASE4_MCP.md). Três ferramentas MCP expõem a recuperação;
+**nenhuma responde perguntas** — devolvem trechos com procedência (contrato, offsets,
+similaridade) e param aí. Um servidor que respondesse embutiria as decisões da Fase 2 num lugar
+onde ninguém as mede, e a tese é sobre **medir** recusa, não escondê-la atrás de uma API.
+
+- **Os 68 testes passavam com o servidor sem subir.** Eu escrevi `mcp.server.fastmcp.FastMCP` de
+  memória — API de uma versão anterior do SDK — e do lado do cliente isso aparecia só como
+  *"Connection closed"*. Teste com dependência injetada prova a **lógica**; não prova que o
+  processo sobe, que o handshake fecha, nem que o cliente enxerga as ferramentas. Por isso
+  [`provar_mcp.py`](provar_mcp.py) ficou versionado: ele sobe o servidor como **subprocesso**.
+- **`naoconsta_estatisticas` declara o teto no próprio protocolo**: 88,1% de recall significa que
+  ~11,9% das respondíveis não têm evidência no material entregue. Sem esse aviso, quem consome os
+  trechos lê abstenção como acerto.
+- **Erro de infraestrutura agora diz o que fazer.** Um `connection timeout expired` opaco me
+  custou uma rodada inteira procurando defeito no protocolo — o problema era o Docker parado.
 
 ## Fase 2 — eu previ o modo de falha ao contrário
 
