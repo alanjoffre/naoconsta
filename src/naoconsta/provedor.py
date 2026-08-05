@@ -93,6 +93,67 @@ def chamar_groq(prompt: str, modelo: str = "llama-3.3-70b-versatile",
     raise RuntimeError("groq: limite de tentativas esgotado")
 
 
+# Preço por milhão de tokens. NÃO tem default: modelo fora da tabela levanta erro em vez de
+# reportar custo 0. É a lição da Fase 18 do RodoQuery — um relatório que publica `custo_usd: 0`
+# porque o cálculo falhou em silêncio é pior que um que falha alto.
+PRECOS_ANTHROPIC: dict[str, tuple[float, float]] = {
+    "claude-haiku-4-5": (1.00, 5.00),
+    "claude-sonnet-5": (3.00, 15.00),
+    "claude-opus-5": (5.00, 25.00),
+}
+
+
+def chamar_anthropic(prompt: str, modelo: str = "claude-haiku-4-5") -> tuple[str, dict]:
+    """SDK oficial `anthropic`, não HTTP puro.
+
+    Aqui a escolha é oposta à do Ollama/Groq de propósito: aqueles são serviços genéricos que
+    falam HTTP, e uma dependência a menos é ganho real. Este é o SDK do próprio provedor — ele
+    já traz retry com backoff para 429/5xx (`max_retries=2`), exceções tipadas e o parsing do
+    `usage`. Reimplementar isso à mão seria escrever pior o que já existe.
+
+    Decisões declaradas, ambas herdadas do pré-registro:
+      - **sem structured outputs**: forçar JSON Schema responderia por decreto metade do que a
+        fase mede (quantas saídas o modelo emite malformadas);
+      - **sem `output_config.effort`**: o parâmetro não existe no Haiku 4.5 e seria erro.
+    """
+    import anthropic  # import TARDIO: quem roda só o caminho local não instala o extra [api]
+
+    chave = os.environ.get("ANTHROPIC_API_KEY")
+    if not chave:
+        raise RuntimeError(
+            "ANTHROPIC_API_KEY ausente. Acrescente ao ~/naoconsta/.env (chmod 600):\n"
+            "  grep '^ANTHROPIC_API_KEY=' ~/rodoquery/.env >> ~/naoconsta/.env"
+        )
+    if modelo not in PRECOS_ANTHROPIC:
+        raise ValueError(f"sem preco tabelado para '{modelo}' — acrescente em PRECOS_ANTHROPIC "
+                         f"antes de rodar, para o custo nao sair zerado")
+
+    cliente = anthropic.Anthropic(api_key=chave)
+    t0 = time.perf_counter()
+    try:
+        r = cliente.messages.create(
+            model=modelo, max_tokens=1024,
+            messages=[{"role": "user", "content": prompt}],
+        )
+    except anthropic.RateLimitError as e:
+        raise RuntimeError(f"anthropic: limite de taxa apos os retries do SDK: {e}") from e
+    except anthropic.APIStatusError as e:
+        raise RuntimeError(f"anthropic HTTP {e.status_code}: {str(e)[:200]}") from e
+    except anthropic.APIConnectionError as e:
+        raise RuntimeError(f"anthropic: falha de rede: {e}") from e
+
+    entrada, saida = PRECOS_ANTHROPIC[modelo]
+    ent, sai = r.usage.input_tokens, r.usage.output_tokens
+    return "".join(b.text for b in r.content if b.type == "text"), {
+        "provedor": "anthropic", "modelo_efetivo": r.model,
+        "tokens_entrada": ent, "tokens_saida": sai,
+        "segundos": round(time.perf_counter() - t0, 2),
+        # A conta sai da telemetria REAL da resposta, nunca de uma estimativa a priori.
+        "custo_usd": round(ent / 1e6 * entrada + sai / 1e6 * saida, 6),
+        "parou_por": r.stop_reason,
+    }
+
+
 def _segundos(v: str | None) -> float | None:
     """Aceita `7.5`, `205ms`, `1m26.4s` — os três formatos que a API devolve."""
     if not v:
@@ -115,7 +176,7 @@ def _segundos(v: str | None) -> float | None:
     return total or None
 
 
-PROVEDORES = {"ollama": chamar_ollama, "groq": chamar_groq}
+PROVEDORES = {"ollama": chamar_ollama, "groq": chamar_groq, "anthropic": chamar_anthropic}
 
 
 def obter(nome: str):
