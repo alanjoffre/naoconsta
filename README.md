@@ -111,9 +111,42 @@ fase vieram junto para cá:
 |:---:|---|---|
 | **0** · Dados | o corpus sustenta a tese da recusa? | ✅ **GO**, 7/7 critérios |
 | **1** · Recuperação | pgvector acha o span certo? (`recall` contra offset humano, **sem juiz-LLM**) | ✅ **88,1%** em 12k chars · o defeito estava na **pergunta** (+9,0 pp) · **meu portão era manipulável** · HNSW nunca usado |
-| **2** · Agente | grafo LangGraph com decisão explícita de **abstenção** | ⏳ liberada — portão v2 aberto por mérito |
-| **3** · Avaliação | acurácia **×** abstenção, com IC e teste pareado | ⏳ |
+| **2** · Agente | grafo LangGraph com **guarda de procedência** | ✅ **62,0%** (124/200) · ❌ **3 de 5 previsões refutadas** · o modo de falha é o **oposto** do previsto · ❌ **a guarda tinha defeito meu** |
+| **2b** · SUT capaz | o eixo da recusa volta a discriminar com um modelo que sabe responder? | ⏳ **aberta** — é o contraste que falta |
+| **3** · Avaliação | acurácia **×** abstenção, sem juiz-LLM | ✅ integrada à Fase 2 |
 | **4** · MCP | expor a recuperação como servidor MCP | ⏳ |
+
+## Fase 2 — eu previ o modo de falha ao contrário
+
+Detalhe em [`docs/FASE2_AGENTE.md`](docs/FASE2_AGENTE.md); a previsão está em
+[`docs/FASE2_PREREGISTRO.md`](docs/FASE2_PREREGISTRO.md), **commitada antes de rodar**.
+200 consultas estratificadas, `qwen2.5:7b` local, **sem juiz-LLM**, custo zero.
+
+| | sem guarda | com guarda |
+|---|---:|---:|
+| respondíveis | 33,0% | 33,0% |
+| respondíveis **com a evidência entregue** | 36,8% | 36,8% |
+| abstenção | 90,0% | **91,0%** |
+| **total** | 123/200 | **124/200** |
+
+**3 das 5 previsões caíram, incluindo a central.** Eu construí uma guarda contra **alucinação**,
+apostando que um 7B com 12.000 caracteres na frente sempre acharia algo parecido com resposta. Ele
+**abstém em 90%** e acerta só **33%** das respondíveis, mesmo com a evidência entregue em 87 de 100
+casos: o problema dele não é inventar, é **não responder**. Com um SUT fraco a recusa está fácil e
+quem discrimina é a resposta — o que **não refuta a tese**, mas mostra que ela **depende da força do
+modelo**, como a lei da Fase 18 do RodoQuery previa para muletas. A Fase 2b é o contraste que falta.
+
+**E a guarda tinha um defeito meu.** Na primeira execução ela *piorou* o placar (123 → 121): dos 13
+barrados, **4 atravessavam trechos adjacentes** e **3 desses acertavam o gold**, com citações de
+376, 438 e 541 caracteres. Uma citação de 541 caracteres **não cabe** num chunk de 400 — reprovada
+por construção. A Fase 1d trocou o chunk de 1.200 para 400 por um motivo medido e sem relação
+nenhuma com a guarda, e isso **quebrou em silêncio** um componente escrito quando o chunk era três
+vezes maior. A pergunta certa nunca foi *"cabe num pedaço?"* e sim **"veio do material que o agente
+viu?"**. Corrigida: barrados 13 → 8, acertos perdidos 3 → **0**, placar 123 → **124**.
+
+> A guarda é **neutra no placar e positiva na confiança**: converte 8 citações fabricadas em
+> abstenções, mas só 1 caía numa pergunta sem resposta. Melhorar o comportamento sem melhorar a
+> pontuação é diferente de ser inútil — e está reportado assim.
 
 ## Fase 1 — o que a medição refutou
 

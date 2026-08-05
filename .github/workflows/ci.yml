@@ -39,3 +39,9 @@ jobs:
 
       - name: Testes
         run: pytest -q
+
+      # Cada número afirmado no README/docs é conferido contra o artefato que o produziu.
+      # Roda no CI porque documentação diverge em silêncio: no RodoQuery o README chegou a
+      # afirmar 86,9% numa linha enquanto o artefato guardava 89,7%.
+      - name: Auditoria de fidelidade (números x artefatos)
+        run: python auditar_documentacao.py
