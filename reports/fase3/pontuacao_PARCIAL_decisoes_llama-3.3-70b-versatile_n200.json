@@ -1,0 +1,108 @@
+{
+  "artefato": "PARCIAL_decisoes_llama-3.3-70b-versatile_n200.json",
+  "modelo": "llama-3.3-70b-versatile",
+  "n": 35,
+  "teto_recuperacao": 0.7647,
+  "json_malformado": 0,
+  "guarda_barrou": 0,
+  "respondeu_sem_guarda": 15,
+  "motivos_guarda": {},
+  "sistemas": {
+    "sem_guarda": {
+      "respondiveis": {
+        "acertos": 10,
+        "n": 17,
+        "taxa": 0.5882,
+        "ic95": [
+          0.3601,
+          0.7839
+        ]
+      },
+      "respondiveis_recuperaveis": {
+        "acertos": 10,
+        "n": 13,
+        "taxa": 0.7692,
+        "ic95": [
+          0.4974,
+          0.9182
+        ]
+      },
+      "abstencao": {
+        "acertos": 15,
+        "n": 18,
+        "taxa": 0.8333,
+        "ic95": [
+          0.6078,
+          0.9416
+        ]
+      },
+      "total": {
+        "acertos": 25,
+        "n": 35,
+        "taxa": 0.7143
+      }
+    },
+    "com_guarda": {
+      "respondiveis": {
+        "acertos": 10,
+        "n": 17,
+        "taxa": 0.5882,
+        "ic95": [
+          0.3601,
+          0.7839
+        ]
+      },
+      "respondiveis_recuperaveis": {
+        "acertos": 10,
+        "n": 13,
+        "taxa": 0.7692,
+        "ic95": [
+          0.4974,
+          0.9182
+        ]
+      },
+      "abstencao": {
+        "acertos": 15,
+        "n": 18,
+        "taxa": 0.8333,
+        "ic95": [
+          0.6078,
+          0.9416
+        ]
+      },
+      "total": {
+        "acertos": 25,
+        "n": 35,
+        "taxa": 0.7143
+      }
+    }
+  },
+  "mcnemar_abstencao": {
+    "guarda_ganha": 0,
+    "sem_guarda_ganha": 0,
+    "p": 1.0
+  },
+  "delta_abstencao_pp": 0.0,
+  "preregistro": {
+    "1: guarda pega >=10% das respostas": {
+      "confirmada": false,
+      "medido": "0.0%"
+    },
+    "2: delta de abstencao >= 15 pp": {
+      "confirmada": false,
+      "medido": "+0.0 pp"
+    },
+    "3: sem_guarda abstem em < 40%": {
+      "confirmada": false,
+      "medido": "83.3%"
+    },
+    "4: acuracia respondiveis <= 55%": {
+      "confirmada": false,
+      "medido": "58.8%"
+    },
+    "5: >=5% de JSON malformado": {
+      "confirmada": false,
+      "medido": "0.0%"
+    }
+  }
+}
