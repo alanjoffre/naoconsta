@@ -236,6 +236,10 @@ abertos.
   anotado por humano, e a régua é aritmética de intervalos. Vale para a recuperação **e** para o
   agente — a guarda de procedência é comparação de string, não julgamento de modelo.
 
+## Como foi feito
+
+Projeto de portfólio desenvolvido por mim, com apoio de um assistente de IA (Claude) para código, testes e documentação; o apoio é visível nos commits. Eu defini o escopo, as decisões de arquitetura, as medições e revisei o resultado. Dados públicos (benchmark CUAD), sem código de empregador ou cliente.
+
 ## Licença
 
 Código sob MIT. O corpus **CUAD** é do [Atticus Project](https://www.atticusprojectai.org/cuad),
