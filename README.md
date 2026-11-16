@@ -236,9 +236,9 @@ abertos.
   anotado por humano, e a régua é aritmética de intervalos. Vale para a recuperação **e** para o
   agente — a guarda de procedência é comparação de string, não julgamento de modelo.
 
-## Como foi feito
+## Sobre os dados
 
-Desenvolvo com assistente de IA no fluxo de trabalho, para ganhar velocidade em código, testes e documentação. O que sustenta o resultado está versionado aqui: escopo e decisões registrados, testes e medições. Dados públicos (benchmark CUAD), sem código de empregador ou cliente.
+Dados públicos (benchmark CUAD), sem código de empregador ou cliente. Escopo, decisões, testes e medições estão versionados neste repositório.
 
 ## Licença
 
