@@ -238,7 +238,7 @@ abertos.
 
 ## Como foi feito
 
-Projeto de portfólio desenvolvido por mim, com apoio de um assistente de IA para código, testes e documentação; o apoio é visível nos commits. Eu defini o escopo, as decisões de arquitetura, as medições e revisei o resultado. Dados públicos (benchmark CUAD), sem código de empregador ou cliente.
+Desenvolvo com assistente de IA no fluxo de trabalho, para ganhar velocidade em código, testes e documentação. O que sustenta o resultado está versionado aqui: escopo e decisões registrados, testes e medições. Dados públicos (benchmark CUAD), sem código de empregador ou cliente.
 
 ## Licença
 
