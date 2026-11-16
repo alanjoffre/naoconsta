@@ -54,7 +54,7 @@ PASSA  2_volume_perguntas       ≥ 5.000 perguntas rotuladas
 PASSA  3_recusa_e_maioria       ≥ 50% das perguntas SEM resposta   ← o eixo da tese
 PASSA  4_gold_verificavel       ≥ 99% dos spans batem no offset declarado
 PASSA  5_gold_humano            rótulo é humano, não de máquina
-PASSA  6_licenca_permissiva     licença permite uso em portfólio público
+PASSA  6_licenca_permissiva     licença permite uso público
 PASSA  7_texto_substancial      mediana ≥ 10.000 caracteres por contrato
 
 VEREDITO: GO

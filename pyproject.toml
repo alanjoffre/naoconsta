@@ -9,7 +9,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# Grafo do agente (LangGraph) — o eixo de "frameworks de agentes" das vagas.
+# Grafo do agente (LangGraph), opcional.
 grafo = ["langgraph>=0.2", "langchain-core>=0.3"]
 # Recuperação: pgvector no Postgres.
 vetor = ["psycopg[binary]>=3.2", "pgvector>=0.3"]

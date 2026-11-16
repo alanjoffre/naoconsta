@@ -30,7 +30,7 @@ CRITERIOS = {
     "4_gold_verificavel":   ("≥ 99% dos spans batem com o texto no offset declarado",
                              lambda m: m["taxa_span_confere"] >= 0.99),
     "5_gold_humano":        ("rótulo é humano, não de máquina", lambda m: m["gold_humano"]),
-    "6_licenca_permissiva": ("licença permite uso em portfólio público", lambda m: m["licenca_ok"]),
+    "6_licenca_permissiva": ("licença permite uso público", lambda m: m["licenca_ok"]),
     "7_texto_substancial":  ("mediana ≥ 10.000 caracteres por contrato (RAG faz sentido)",
                              lambda m: m["chars_mediana"] >= 10_000),
 }

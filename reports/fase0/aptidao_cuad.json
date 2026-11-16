@@ -7,7 +7,7 @@
     "3_recusa_e_maioria": "≥ 50% das perguntas SEM resposta (o eixo da tese)",
     "4_gold_verificavel": "≥ 99% dos spans batem com o texto no offset declarado",
     "5_gold_humano": "rótulo é humano, não de máquina",
-    "6_licenca_permissiva": "licença permite uso em portfólio público",
+    "6_licenca_permissiva": "licença permite uso público",
     "7_texto_substancial": "mediana ≥ 10.000 caracteres por contrato (RAG faz sentido)"
   },
   "medidas": {
